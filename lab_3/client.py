@@ -2,7 +2,7 @@ import socket
 
 HOST = 'localhost' # maquina onde esta o par passivo
 PORTA = 5000        # porta que o par passivo esta escutando
-EXIT_CODE = '$exit'
+EXIT_CODE = 'exit'
 ENCODING = 'utf-8'
 
 # Trata o input para não aceitar palavra vazia
@@ -23,10 +23,9 @@ while True:
         break
     search_query = read_input('Digite a palavra a ser buscada: ')
 
-    # Envia as duas mensagens para o servidor
-    sock.send(str.encode(file_name, encoding=ENCODING))
-    sock.send(str.encode(search_query, encoding=ENCODING))
-
+    # Envia apenas uma mensagem para o servidor, contendo as duas entradas
+    sock.send(str.encode(f'{file_name}\n{search_query}', encoding=ENCODING))
+    print('Enviado')
     # Imprime a resposta
     msg = sock.recv(1024)
     print(str(msg,  encoding=ENCODING))
